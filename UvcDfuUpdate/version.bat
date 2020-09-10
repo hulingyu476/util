@@ -6,7 +6,7 @@ set pidvid=%%i
 set swver=%%j
 )
 
-if "%swver%"=="to" (goto notfind) else (goto find)
+if "%pidvid:~1,9%"=="2757:2001" (goto find) else (goto notfind)
 
 :find
 ::echo find
@@ -22,14 +22,20 @@ set pid=%pidvid:~6,4%
 for /F "tokens=1 delims=ver^=" %%i in ("%swver%") do (set swver=%%i)
 for /F "tokens=1 delims=," %%i in ("%swver%") do (set swver=%%i)
 
-echo JX1701U:%swver%> uvcversion.txt
+
+set MainVersion=V8
+set SubVersion=%swver:~0,1%
+set CusVersion=%swver:~1,3%
+
+::echo JX1701U:V8.%swver%> uvcversion.txt
+echo JX1701U:%MainVersion%.%SubVersion%.%CusVersion%> uvcversion.txt
 
 exit
 
 :notfind
 ::echo notfind
 
-echo. > uvcversion.txt
+echo off> uvcversion.txt
 
 exit
 
