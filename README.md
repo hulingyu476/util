@@ -17,9 +17,6 @@ socket测试
 
 socket reset usb hub
 
-# UvcDfuUpdate
-
-UVC Camera 升级固件，dfu模式
 
 # Android_Optimization
 
