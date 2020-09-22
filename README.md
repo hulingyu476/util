@@ -1,23 +1,15 @@
-# Character_Encoding
+# CharacterEncoding
 字符集变换工具集
 
-# Command
+# CTool
 
-命令工具集
-
-# Ctool
-
-C库
-
-# LocalSocket
-
-socket测试
-
-# UsbRest
-
-socket reset usb hub
+C工具：一些C语言的实现
 
 
-# Android_Optimization
+# AndroidOptimization
 
 Android优化
+
+# AndroidTools
+
+Android下小工具
