@@ -4,6 +4,7 @@
 # CTool
 
 C工具：一些C语言的实现
+GCC VC Intel C， B&R C等等不同的版本，有些差异
 
 
 # AndroidOptimization
