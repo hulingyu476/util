@@ -1,0 +1,5 @@
+D:/code/CMakeTest/myadd/build/CMakeFiles/MathCalc.dir
+D:/code/CMakeTest/myadd/build/CMakeFiles/MyAdd.dir
+D:/code/CMakeTest/myadd/build/CMakeFiles/INSTALL.dir
+D:/code/CMakeTest/myadd/build/CMakeFiles/ALL_BUILD.dir
+D:/code/CMakeTest/myadd/build/CMakeFiles/ZERO_CHECK.dir
