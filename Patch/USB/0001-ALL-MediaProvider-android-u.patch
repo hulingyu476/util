@@ -1,0 +1,89 @@
+From 145aa4bebd106d503a6b47a51f69249b545a61d0 Mon Sep 17 00:00:00 2001
+From: tansl <tansl@ist.com.hk>
+Date: Fri, 13 Jan 2023 16:47:56 +0800
+Subject: [PATCH] =?UTF-8?q?[ALL][MediaProvider]:=E4=BF=AE=E5=A4=8Dandroid?=
+ =?UTF-8?q?=E8=87=AA=E5=8A=A8=E5=9C=A8u=E7=9B=98=E7=94=9F=E6=88=90?=
+ =?UTF-8?q?=E6=96=87=E4=BB=B6=E5=A4=B9?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ .../com/android/providers/media/MediaProvider.java | 40 ++++++++++++++++------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
+
+diff --git a/mt9666_an11/packages/providers/MediaProvider/src/com/android/providers/media/MediaProvider.java b/mt9666_an11/packages/providers/MediaProvider/src/com/android/providers/media/MediaProvider.java
+index 5bc77d0..052e2fb 100644
+--- a/mt9666_an11/packages/providers/MediaProvider/src/com/android/providers/media/MediaProvider.java
++++ b/mt9666_an11/packages/providers/MediaProvider/src/com/android/providers/media/MediaProvider.java
+@@ -792,7 +792,22 @@ public class MediaProvider extends ContentProvider {
+         }
+         return false;
+     }
+-
++	//add by yangT 2020-9-26
++     private String usbRoodPath = "/mnt/media_rw";
++	private boolean isExistUsb(String dirName) {
++		if (dirName.length() >= 9 && dirName.contains("-")) {
++			String startChar = dirName.substring(0, dirName.indexOf("-"));
++		        String endChar = dirName.substring(dirName.indexOf("-") + 1);
++		        Log.i(TAG, "yangT...startChar=" + startChar + ";;;endChar=" + endChar);
++		        if (null != startChar && null != endChar&& startChar.length() == 4 && endChar.length() == 4) {
++						return true;
++			}
++		}
++
++			Log.w(TAG, "yangT...no usb");
++			return false;
++		}
++		//add end
+     /**
+      * Ensure that default folders are created on mounted primary storage
+      * devices. We only do this once per volume so we don't annoy the user if
+@@ -817,14 +832,16 @@ public class MediaProvider extends ContentProvider {
+             final SharedPreferences prefs = PreferenceManager
+                     .getDefaultSharedPreferences(getContext());
+             if (prefs.getInt(key, 0) == 0) {
+-                for (String folderName : sDefaultFolderNames) {
+-                    final File folder = new File(vol.getDirectory(), folderName);
+-                    if (!folder.exists()) {
+-                        folder.mkdirs();
+-                        insertDirectory(db, folder.getAbsolutePath());
+-                    }
+-                }
+-
++ 		if(!isExistUsb(volumeName)){
++	              for (String folderName : sDefaultFolderNames) {
++	                    final File folder = new File(vol.getDirectory(), folderName);
++	                    if (!folder.exists()) {
++	                        folder.mkdirs();
++	                        insertDirectory(db, folder.getAbsolutePath());
++	                    }
++	                }
++		 }
++                Log.d(TAG,"volumeName##"+volumeName);
+                 SharedPreferences.Editor editor = prefs.edit();
+                 editor.putInt(key, 1);
+                 editor.commit();
+@@ -834,6 +851,7 @@ public class MediaProvider extends ContentProvider {
+         }
+     }
+ 
++
+     /**
+      * Ensure that any thumbnail collections on the given storage volume can be
+      * used with the given {@link DatabaseHelper}. If the
+@@ -845,7 +863,9 @@ public class MediaProvider extends ContentProvider {
+         try {
+             for (File dir : getThumbnailDirectories(volumeName)) {
+                 if (!dir.exists()) {
+-                    dir.mkdirs();
++                    if(!isExistUsb(volumeName)){
++                    	dir.mkdirs();
++		    }
+                 }
+ 
+                 final File file = new File(dir, FILE_DATABASE_UUID);
+-- 
+1.9.1
+
